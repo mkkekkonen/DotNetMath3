@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMath3.UI", "DotNetMath3.UI\DotNetMath3.UI.csproj", "{B98A8627-2141-4DC6-B4C4-1C0C6C78F2E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMath3.API", "DotNetMath3.API\DotNetMath3.API.csproj", "{FFF02A04-5538-4991-BEF1-CD03259B16CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B98A8627-2141-4DC6-B4C4-1C0C6C78F2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B98A8627-2141-4DC6-B4C4-1C0C6C78F2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B98A8627-2141-4DC6-B4C4-1C0C6C78F2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF02A04-5538-4991-BEF1-CD03259B16CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF02A04-5538-4991-BEF1-CD03259B16CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF02A04-5538-4991-BEF1-CD03259B16CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF02A04-5538-4991-BEF1-CD03259B16CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
