@@ -1,4 +1,4 @@
-﻿using DotNetMath3.API.Models;
+﻿using DotNetMath3.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetMath3.API.DbContexts

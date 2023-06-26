@@ -1,9 +1,20 @@
 using DotNetMath3.API.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
+var MathAllowSpecificOrigins = "_mathAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: MathAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7220");
+        });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MathAllowSpecificOrigins);
 
 app.UseAuthorization();
 

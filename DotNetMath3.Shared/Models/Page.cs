@@ -1,4 +1,4 @@
-﻿namespace DotNetMath3.API.Models
+﻿namespace DotNetMath3.Shared.Models
 {
     public class Page
     {
