@@ -1,10 +1,11 @@
 using DotNetMath3.API.DbContexts;
+using DotNetMath3.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var MathAllowSpecificOrigins = "_mathAllowSpecificOrigins";
-var IssuerAudience = "https://mkkekkonen.fi";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +36,8 @@ builder.Services
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = IssuerAudience,
-            ValidAudience = IssuerAudience,
+            ValidIssuer = builder.Configuration["Constants:IssuerAudience"],
+            ValidAudience = builder.Configuration["Constants:IssuerAudience"],
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:IssuerSigningKey"])
             )
@@ -44,6 +45,18 @@ builder.Services
     });
 
 builder.Services.AddDbContext<MathDataContext>();
+
+builder.Services
+    .AddIdentityCore<IdentityUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireNonAlphanumeric = true;
+    })
+    .AddEntityFrameworkStores<MathDataContext>();
+
+builder.Services.AddScoped<TokenService, TokenService>();
 
 var app = builder.Build();
 

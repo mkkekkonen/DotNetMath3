@@ -1,9 +1,11 @@
 ﻿using DotNetMath3.Shared.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetMath3.API.DbContexts
 {
-    public class MathDataContext : DbContext
+    public class MathDataContext : IdentityUserContext<IdentityUser>
     {
         private readonly IConfiguration _configuration;
 
@@ -11,7 +13,7 @@ namespace DotNetMath3.API.DbContexts
 
         public DbSet<Page> Pages { get; set; }
 
-        public MathDataContext(IConfiguration configuration)
+        public MathDataContext(DbContextOptions<MathDataContext> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;
         }

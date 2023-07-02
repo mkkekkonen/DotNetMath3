@@ -27,7 +27,7 @@ namespace DotNetMath3.API.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("api/AllCategories")]
+        [Route("api/Categories/All")]
         public IActionResult GetAllCategories()
         {
             var categories = _context.Categories

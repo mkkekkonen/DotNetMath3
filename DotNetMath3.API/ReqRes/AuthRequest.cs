@@ -1,0 +1,8 @@
+﻿namespace DotNetMath3.API.ReqRes
+{
+    public class AuthRequest
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}
