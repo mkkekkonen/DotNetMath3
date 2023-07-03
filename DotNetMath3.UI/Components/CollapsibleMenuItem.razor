@@ -1,0 +1,15 @@
+﻿<div class="nav-item px-3 menu-link" @onclick="Collapse">
+    @Category.NameEn <span class="@(collapsed ? "oi oi-chevron-right" : "oi oi-chevron-bottom") chevron-icon"></span>
+</div>
+
+@code {
+    private bool collapsed = true;
+
+    [Parameter]
+    public Category Category { get; set; }
+
+    private void Collapse()
+    {
+        collapsed = !collapsed;
+    }
+}
