@@ -1,9 +1,29 @@
 ﻿@page "/"
+@inject IJSRuntime jsRuntime
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Math Visualized 2</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Math Visualized 2</h1>
 
-Welcome to your new app.
+<div id="anim"></div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <div>
+        <span>Sine:</span> <span id="sine"></span>
+    </div>
+    <div>
+        <span>Cosine:</span> <span id="cosine"></span>
+    </div>
+    <div>
+        <span>Angle:</span> <span id="angle"></span>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) {
+            await jsRuntime.InvokeVoidAsync("runIndex");
+        }
+    }
+}
