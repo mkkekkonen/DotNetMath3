@@ -1,0 +1,44 @@
+﻿@page "/login"
+
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject StateContainer StateContainer
+@inject NavigationManager NavManager
+
+<h3>Login</h3>
+
+<EditForm Model="@loginModel" OnSubmit="@HandleSubmit">
+    <div>
+        <label for="email" class="form-label">Email</label>
+        <InputText type="email" class="form-control" @bind-Value="loginModel.Email" />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <InputText
+            type="password"
+            class="form-control"
+            @bind-Value="loginModel.Password"
+        />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+
+@code {
+    private AuthRequest loginModel = new();
+
+    private async Task HandleSubmit()
+    {
+        using (var msg = await Http.PostAsJsonAsync<AuthRequest>("https://localhost:7262/api/Auth/Login", loginModel))
+        {
+            if (msg.IsSuccessStatusCode)
+            {
+                AuthResponse res = await msg.Content.ReadFromJsonAsync<AuthResponse>();
+                StateContainer.UserName = res.Username;
+                StateContainer.JWTToken = res.Token;
+
+                NavManager.NavigateTo("/");
+            }
+        }
+    }
+}

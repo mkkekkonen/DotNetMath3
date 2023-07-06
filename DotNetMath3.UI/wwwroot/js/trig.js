@@ -146,9 +146,16 @@
         sineDot.y(y);
         cosineDot.x(x);
 
-        document.getElementById('sine').innerText = roundTo2Places(-sine); // Y axis reversed
-        document.getElementById('cosine').innerText = roundTo2Places(cosine);
-        document.getElementById('angle').innerText = (roundTo2Places(-angle) + '°');
+        var sineSpan = document.getElementById('sine');
+        var cosineSpan = document.getElementById('cosine');
+        var angleSpan = document.getElementById('angle');
+
+        if (sineSpan)
+            sineSpan.innerText = roundTo2Places(-sine); // Y axis reversed
+        if (cosineSpan)
+            cosineSpan.innerText = roundTo2Places(cosine);
+        if (angleSpan)
+            angleSpan.innerText = (roundTo2Places(-angle) + '°');
     });
 
     animation.start();

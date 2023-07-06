@@ -1,6 +1,9 @@
 ﻿@using DotNetMath3.UI.Components
 
-@inject HttpClient Http;
+@implements IDisposable
+
+@inject HttpClient Http
+@inject StateContainer StateContainer
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -19,6 +22,21 @@
             </NavLink>
         </div>
 
+        @if (string.IsNullOrEmpty(StateContainer.UserName))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/login">
+                    <span class="oi oi-key" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3 logged-in-name">
+                 <span class="oi oi-person" aria-hidden="true"></span> Hello, @StateContainer.UserName
+            </div>
+        }
+
         @if (categories != null) {
             @foreach (var category in categories)
             {
@@ -31,17 +49,26 @@
 @code {
     private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private List<Category> categories;
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
+        StateContainer.OnChange += StateHasChanged;
+
         categories = await Http.GetFromJsonAsync<List<Category>>("https://localhost:7262/api/Categories");
     }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
     }
 }

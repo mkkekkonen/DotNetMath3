@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DotNetMath3.API.ReqRes
+namespace DotNetMath3.Shared.ReqRes
 {
     public class RegistrationRequest
     {

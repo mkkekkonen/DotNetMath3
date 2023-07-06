@@ -1,6 +1,6 @@
 ﻿using DotNetMath3.API.DbContexts;
-using DotNetMath3.API.ReqRes;
 using DotNetMath3.API.Services;
+using DotNetMath3.Shared.ReqRes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ namespace DotNetMath3.API.Controllers
 
         [HttpPost]
         [Route("api/Auth/Register")]
-        public async Task<IActionResult> RegisterAsync(RegistrationRequest request)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegistrationRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -43,7 +43,7 @@ namespace DotNetMath3.API.Controllers
             if (result.Succeeded)
             {
                 request.Password = "";
-                return CreatedAtAction(nameof(RegisterAsync), new { request.Email }, request);
+                return CreatedAtAction("Register", new { request.Email }, request);
             }
 
             foreach (var error in result.Errors)
