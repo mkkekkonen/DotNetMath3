@@ -32,8 +32,14 @@
         }
         else
         {
-            <div class="nav-item px-3 logged-in-name">
-                 <span class="oi oi-person" aria-hidden="true"></span> Hello, @StateContainer.UserName
+            <div class="nav-item px-3 logged-in-name m-3">
+                <span class="oi oi-person" aria-hidden="true"></span> Hello, @StateContainer.UserName
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="LogOut">
+                    <span class="oi oi-power-standby"></span> Log out
+                </NavLink>
             </div>
         }
 
@@ -65,6 +71,13 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void LogOut()
+    {
+        StateContainer.UserName = string.Empty;
+        StateContainer.JWTToken = string.Empty;
+        StateHasChanged();
     }
 
     public void Dispose()

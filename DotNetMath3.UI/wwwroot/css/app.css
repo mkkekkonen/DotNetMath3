@@ -75,4 +75,9 @@ a, .btn-link {
 
 .logged-in-name {
     color: #fff;
+    cursor: default;
+}
+
+.nav-link {
+    cursor: pointer;
 }
