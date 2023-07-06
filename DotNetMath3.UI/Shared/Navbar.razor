@@ -1,0 +1,40 @@
+﻿@implements IDisposable
+
+@inject StateContainer StateContainer
+
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            @if (!string.IsNullOrEmpty(StateContainer.UserName))
+            {
+                <li class="nav-item">
+                    <a class="nav-link">Edit categories</a>
+                </li>
+
+                <li class="nav-item ps-3" @onclick="LogOut">
+                    <a class="nav-link"><span class="oi oi-power-standby"></span> Logout</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        StateContainer.OnChange += StateHasChanged;
+    }
+
+    private void LogOut()
+    {
+        StateContainer.UserName = string.Empty;
+        StateContainer.JWTToken = string.Empty;
+    }
+
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
+    }
+}
