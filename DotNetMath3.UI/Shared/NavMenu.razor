@@ -3,7 +3,7 @@
 @implements IDisposable
 
 @inject HttpClient Http
-@inject StateContainer StateContainer
+@inject LoginStateContainer LoginStateContainer
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -22,7 +22,7 @@
             </NavLink>
         </div>
 
-        @if (string.IsNullOrEmpty(StateContainer.UserName))
+        @if (string.IsNullOrEmpty(LoginStateContainer.UserName))
         {
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="/login">
@@ -33,7 +33,7 @@
         else
         {
             <div class="nav-item px-3 logged-in-name m-3">
-                <span class="oi oi-person" aria-hidden="true"></span> Hello, @StateContainer.UserName
+                <span class="oi oi-person" aria-hidden="true"></span> Hello, @LoginStateContainer.UserName
             </div>
 
             <div class="nav-item px-3">
@@ -41,13 +41,6 @@
                     <span class="oi oi-power-standby"></span> Log out
                 </NavLink>
             </div>
-        }
-
-        @if (categories != null) {
-            @foreach (var category in categories)
-            {
-                <CollapsibleMenuItem Category="category" />
-            }
         }
     </div>
 </div>
@@ -57,15 +50,13 @@
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private List<Category> categories;
-
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        StateContainer.OnChange += StateHasChanged;
+        LoginStateContainer.LoginDataChanged += StateHasChanged;
 
-        categories = await Http.GetFromJsonAsync<List<Category>>("https://localhost:7262/api/Categories");
+        //categories = await Http.GetFromJsonAsync<List<Category>>("https://localhost:7262/api/Categories");
     }
 
     private void ToggleNavMenu()
@@ -75,12 +66,11 @@
 
     private void LogOut()
     {
-        StateContainer.UserName = string.Empty;
-        StateContainer.JWTToken = string.Empty;
+        LoginStateContainer.LogOut();
     }
 
     public void Dispose()
     {
-        StateContainer.OnChange -= StateHasChanged;
+        LoginStateContainer.LoginDataChanged -= StateHasChanged;
     }
 }
